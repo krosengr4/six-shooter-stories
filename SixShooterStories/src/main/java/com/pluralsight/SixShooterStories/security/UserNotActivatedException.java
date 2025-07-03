@@ -1,7 +1,10 @@
 package com.pluralsight.SixShooterStories.security;
 
 public class UserNotActivatedException extends RuntimeException {
-  public UserNotActivatedException(String message) {
-    super(message);
-  }
+
+	private static final long serialVersionUID = -1126699074574529145L;
+
+	public UserNotActivatedException(String message) {
+		super(message);
+	}
 }
