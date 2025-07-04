@@ -3,14 +3,12 @@ package com.pluralsight.SixShooterStories.data.mysql;
 import com.pluralsight.SixShooterStories.data.UserDao;
 import com.pluralsight.SixShooterStories.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 import java.lang.module.ResolutionException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -90,6 +88,31 @@ public class MySqlUserDao extends MySqlBaseDao implements UserDao {
 			return user.getId();
 		else
 			return -1;
+	}
+
+	@Override
+	public User create(User newUser) {
+		String query = "INSERT INTO users (username, hashed_password, role) " +
+							   "VALUES (?, ?, ?);";
+
+		try(Connection connection = getConnection()) {
+			PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+			statement.setString(1, newUser.getUserName());
+			statement.setString(2, new BCryptPasswordEncoder().encode(newUser.getPassword()));
+			statement.setString(3, newUser.getRole());
+
+			int rows = statement.executeUpdate();
+			if(rows > 0) {
+				User user = getByUserName(newUser.getUserName());
+				user.setPassword("");
+
+				return user;
+			}
+
+		} catch(SQLException e) {
+			throw new RuntimeException(e);
+		}
+		return null;
 	}
 
 	private User mapRow(ResultSet results) throws SQLException {
