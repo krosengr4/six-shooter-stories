@@ -81,6 +81,7 @@ public class AuthController {
 			return new ResponseEntity<>(user, HttpStatus.CREATED);
 		} catch(Exception e) {
 			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
+//			throw new RuntimeException(e);
 		}
 	}
 }

@@ -122,6 +122,6 @@ public class User {
 				return role.getName().toUpperCase();
 			}
 		}
-		return "ROLE_USER";
+		return "ROLE_ADMIN";
 	}
 }

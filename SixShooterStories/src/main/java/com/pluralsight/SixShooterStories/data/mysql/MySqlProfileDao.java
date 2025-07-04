@@ -46,7 +46,7 @@ public class MySqlProfileDao extends MySqlBaseDao implements ProfileDao {
 							   "email = ?, " +
 							   "github_link = ?, " +
 							   "city = ?, " +
-							   "state = ?, " +
+							   "state = ? " +
 							   "WHERE user_id = ?;";
 		try(Connection connection = getConnection()) {
 			PreparedStatement statement = connection.prepareStatement(query);
