@@ -105,7 +105,6 @@ public class MySqlUserDao extends MySqlBaseDao implements UserDao {
 			if(rows > 0) {
 				User user = getByUserName(newUser.getUserName());
 				user.setPassword("");
-
 				return user;
 			}
 
@@ -113,6 +112,12 @@ public class MySqlUserDao extends MySqlBaseDao implements UserDao {
 			throw new RuntimeException(e);
 		}
 		return null;
+	}
+
+	@Override
+	public boolean exists(String username) {
+		User user = getByUserName(username);
+		return user != null;
 	}
 
 	private User mapRow(ResultSet results) throws SQLException {
