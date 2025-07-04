@@ -2,10 +2,17 @@ package com.pluralsight.SixShooterStories.controllers;
 
 import com.pluralsight.SixShooterStories.data.ProfileDao;
 import com.pluralsight.SixShooterStories.data.UserDao;
+import com.pluralsight.SixShooterStories.models.Profile;
+import com.pluralsight.SixShooterStories.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.security.Principal;
 
 @RestController
 @RequestMapping("profile")
@@ -19,5 +26,18 @@ public class ProfileController {
 	public ProfileController(ProfileDao profileDao, UserDao userDao) {
 		this.profileDao = profileDao;
 		this.userDao = userDao;
+	}
+
+	@GetMapping("")
+	public Profile getByUserId(Principal principal) {
+		try {
+			String userName = principal.getName();
+			User user = userDao.getByUserName(userName);
+			int userId = user.getId();
+
+			return profileDao.getByUserId(userId);
+		} catch(Exception e) {
+			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad :(");
+		}
 	}
 }
