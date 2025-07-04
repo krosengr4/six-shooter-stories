@@ -82,6 +82,16 @@ public class MySqlUserDao extends MySqlBaseDao implements UserDao {
 		return null;
 	}
 
+	@Override
+	public int getIdByUserName(String userName) {
+		User user = getByUserName(userName);
+
+		if(user != null)
+			return user.getId();
+		else
+			return -1;
+	}
+
 	private User mapRow(ResultSet results) throws SQLException {
 		int userId = results.getInt("user_id");
 		String username = results.getNString("username");
