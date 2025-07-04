@@ -2,6 +2,7 @@ package com.pluralsight.SixShooterStories.data.mysql;
 
 import com.pluralsight.SixShooterStories.data.ProfileDao;
 import com.pluralsight.SixShooterStories.models.Profile;
+import org.apache.ibatis.jdbc.SQL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -34,6 +35,37 @@ public class MySqlProfileDao extends MySqlBaseDao implements ProfileDao {
 			throw new RuntimeException(e);
 		}
 		return null;
+	}
+
+	@Override
+	public void update(Profile profile) {
+		String query = "UPDATE profiles " +
+							   "SET first_name = ?, " +
+							   "last_name = ?, " +
+							   "email = ?, " +
+							   "github_link = ?, " +
+							   "city = ?, " +
+							   "state = ?, " +
+							   "WHERE user_id = ?;";
+		try(Connection connection = getConnection()) {
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setString(1, profile.getFirstName());
+			statement.setString(2, profile.getLastName());
+			statement.setString(3, profile.getEmail());
+			statement.setString(4, profile.getGithubLink());
+			statement.setString(5, profile.getCity());
+			statement.setString(6, profile.getState());
+			statement.setInt(7, profile.getUserId());
+
+			int rows = statement.executeUpdate();
+			if(rows > 0)
+				System.out.println("Success! Profile was updated!");
+			else
+				System.err.println("ERROR! Could not update profile!!!");
+
+		} catch(SQLException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	private Profile mapRow(ResultSet result) throws SQLException {
