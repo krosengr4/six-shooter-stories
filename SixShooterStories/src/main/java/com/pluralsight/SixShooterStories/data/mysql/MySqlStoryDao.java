@@ -3,7 +3,6 @@ package com.pluralsight.SixShooterStories.data.mysql;
 import com.pluralsight.SixShooterStories.data.StoryDao;
 import com.pluralsight.SixShooterStories.data.UserDao;
 import com.pluralsight.SixShooterStories.models.Story;
-import org.apache.ibatis.jdbc.SQL;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
@@ -132,6 +131,25 @@ public class MySqlStoryDao extends MySqlBaseDao implements StoryDao {
 				System.out.println("Success! The story was updated!");
 			else
 				System.err.println("ERROR! The story could not be updated!!!");
+
+		} catch(SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@Override
+	public void delete(int storyId) {
+		String query = "DELETE FROM stories " +
+							   "WHERE story_id = ?;";
+		try(Connection connection = getConnection()) {
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setInt(1, storyId);
+
+			int rows = statement.executeUpdate();
+			if(rows > 0)
+				System.out.println("Success! The story was deleted!");
+			else
+				System.err.println("ERROR! Could not delete the story!!!");
 
 		} catch(SQLException e) {
 			throw new RuntimeException(e);
