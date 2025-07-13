@@ -2,7 +2,6 @@ package com.pluralsight.SixShooterStories.data.mysql;
 
 import com.pluralsight.SixShooterStories.data.ProfileDao;
 import com.pluralsight.SixShooterStories.models.Profile;
-import org.apache.ibatis.jdbc.SQL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -48,6 +47,7 @@ public class MySqlProfileDao extends MySqlBaseDao implements ProfileDao {
 							   "city = ?, " +
 							   "state = ? " +
 							   "WHERE user_id = ?;";
+
 		try(Connection connection = getConnection()) {
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setString(1, profile.getFirstName());
