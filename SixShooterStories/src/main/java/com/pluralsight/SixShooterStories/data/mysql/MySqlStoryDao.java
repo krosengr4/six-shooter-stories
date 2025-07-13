@@ -43,6 +43,28 @@ public class MySqlStoryDao extends MySqlBaseDao implements StoryDao {
 		return storiesList;
 	}
 
+	@Override
+	public List<Story> getByUserId(int userId) {
+		List<Story> storiesList = new ArrayList<>();
+		String query = "SELECT * FROM stories " +
+							   "WHERE user_id = ?;";
+
+		try(Connection connection = getConnection()) {
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setInt(1, userId);
+
+			ResultSet results = statement.executeQuery();
+			while(results.next()) {
+				storiesList.add(mapRow(results));
+			}
+
+		} catch(SQLException e) {
+			throw new RuntimeException(e);
+		}
+
+		return storiesList;
+	}
+
 
 	private Story mapRow(ResultSet result) throws SQLException{
 		int storyId = result.getInt("story_id");
