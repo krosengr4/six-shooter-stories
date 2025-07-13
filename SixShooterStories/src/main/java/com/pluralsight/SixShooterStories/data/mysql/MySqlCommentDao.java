@@ -5,6 +5,9 @@ import com.pluralsight.SixShooterStories.data.StoryDao;
 import com.pluralsight.SixShooterStories.models.Comment;
 
 import javax.sql.DataSource;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,6 +52,14 @@ public class MySqlCommentDao extends MySqlBaseDao implements CommentDao {
 
 	}
 
+	private Comment mapRow(ResultSet result) throws SQLException {
+		int commentId = result.getInt("comment_id");
+		int userId = result.getInt("user_id");
+		int storyId = result.getInt("story_id");
+		String content = result.getString("content");
+		LocalDateTime datePosted = result.getTimestamp("date_posted").toLocalDateTime();
 
+		return new Comment(commentId, userId, storyId, content, datePosted);
+	}
 
 }
