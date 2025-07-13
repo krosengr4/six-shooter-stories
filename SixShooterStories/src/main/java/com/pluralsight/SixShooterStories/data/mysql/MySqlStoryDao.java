@@ -111,6 +111,33 @@ public class MySqlStoryDao extends MySqlBaseDao implements StoryDao {
 		return null;
 	}
 
+	@Override
+	public void update(Story story) {
+		String query = "UPDATE stories " +
+							   "SET user_id = ?, " +
+							   "title = ?, " +
+							   "content = ?, " +
+							   "date_posted = ? " +
+							   "WHERE story_id = ?;";
+		try(Connection connection = getConnection()) {
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setInt(1, story.getUserId());
+			statement.setString(2, story.getTitle());
+			statement.setString(3, story.getContent());
+			statement.setTimestamp(4, Timestamp.valueOf(story.getDatePosted()));
+			statement.setInt(5, story.getStoryId());
+
+			int rows = statement.executeUpdate();
+			if(rows > 0)
+				System.out.println("Success! The story was updated!");
+			else
+				System.err.println("ERROR! The story could not be updated!!!");
+
+		} catch(SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 
 	private Story mapRow(ResultSet result) throws SQLException{
 		int storyId = result.getInt("story_id");
