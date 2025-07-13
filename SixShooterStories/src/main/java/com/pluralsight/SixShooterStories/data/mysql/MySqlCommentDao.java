@@ -3,8 +3,11 @@ package com.pluralsight.SixShooterStories.data.mysql;
 import com.pluralsight.SixShooterStories.data.CommentDao;
 import com.pluralsight.SixShooterStories.data.StoryDao;
 import com.pluralsight.SixShooterStories.models.Comment;
+import org.apache.ibatis.jdbc.SQL;
 
 import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -19,7 +22,20 @@ public class MySqlCommentDao extends MySqlBaseDao implements CommentDao {
 	@Override
 	public List<Comment> getAll() {
 		List<Comment> commentsList = new ArrayList<>();
+		String query = "SELECT * FROM comments;";
 
+		try(Connection connection = getConnection()) {
+			PreparedStatement statement = connection.prepareStatement(query);
+
+			ResultSet results = statement.executeQuery();
+			while(results.next()) {
+				Comment comment = mapRow(results);
+				commentsList.add(comment);
+			}
+
+		} catch(SQLException e) {
+			throw new RuntimeException(e);
+		}
 
 		return commentsList;
 	}
@@ -27,13 +43,43 @@ public class MySqlCommentDao extends MySqlBaseDao implements CommentDao {
 	@Override
 	public List<Comment> getByStoryId(int storyId) {
 		List<Comment> commentsList = new ArrayList<>();
+		String query = "SELECT * FROM comments " +
+							   "WHERE story_id = ?;";
 
+		try(Connection connection = getConnection()) {
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setInt(1, storyId);
+
+			ResultSet results = statement.executeQuery();
+			while(results.next()) {
+				Comment comment = mapRow(results);
+				commentsList.add(comment);
+			}
+
+		} catch(SQLException e) {
+			throw new RuntimeException(e);
+		}
 
 		return commentsList;
 	}
 
 	@Override
 	public Comment getById(int commentId) {
+		String query = "SELECT * FROM comments " +
+							   "WHERE comment_id = ?;";
+
+		try(Connection connection = getConnection()) {
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setInt(1, commentId);
+
+			ResultSet results = statement.executeQuery();
+			if(results.next()) {
+				return mapRow(results);
+			}
+
+		} catch(SQLException e) {
+			throw new RuntimeException(e);
+		}
 		return null;
 	}
 
