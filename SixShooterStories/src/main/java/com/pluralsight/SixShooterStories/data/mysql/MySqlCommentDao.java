@@ -6,10 +6,7 @@ import com.pluralsight.SixShooterStories.models.Comment;
 import org.apache.ibatis.jdbc.SQL;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -85,6 +82,29 @@ public class MySqlCommentDao extends MySqlBaseDao implements CommentDao {
 
 	@Override
 	public Comment add(Comment comment) {
+		String query = "INSERT INTO comments (user_id, story_id, content, date_posted) " +
+							   "VALUES (?, ?, ?, ?);";
+
+		try(Connection connection = getConnection()) {
+			PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+			statement.setInt(1, comment.getUserId());
+			statement.setInt(2, comment.getStoryId());
+			statement.setString(3, comment.getContent());
+			statement.setTimestamp(4, Timestamp.valueOf(comment.getDatePosted()));
+
+			int rows = statement.executeUpdate();
+			if(rows > 0) {
+				ResultSet key = statement.getGeneratedKeys();
+
+				if(key.next()) {
+					int commentId = key.getInt("comment_id");
+					return getById(commentId);
+				}
+			}
+
+		} catch(SQLException e) {
+			throw new RuntimeException(e);
+		}
 		return null;
 	}
 
@@ -107,5 +127,4 @@ public class MySqlCommentDao extends MySqlBaseDao implements CommentDao {
 
 		return new Comment(commentId, userId, storyId, content, datePosted);
 	}
-
 }
