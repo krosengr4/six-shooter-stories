@@ -10,6 +10,8 @@ public interface StoryDao {
 
 	List<Story> getByUserId(int userId);
 
+	Story getByStoryId(int storyId);
+
 	Story add(Story story);
 
 	void update(Story story);

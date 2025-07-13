@@ -3,13 +3,11 @@ package com.pluralsight.SixShooterStories.data.mysql;
 import com.pluralsight.SixShooterStories.data.StoryDao;
 import com.pluralsight.SixShooterStories.data.UserDao;
 import com.pluralsight.SixShooterStories.models.Story;
+import org.apache.ibatis.jdbc.SQL;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -63,6 +61,54 @@ public class MySqlStoryDao extends MySqlBaseDao implements StoryDao {
 		}
 
 		return storiesList;
+	}
+
+	@Override
+	public Story getByStoryId(int storyId) {
+		String query = "SELECT * FROM stories " +
+							   "WHERE story_id = ?;";
+
+		try(Connection connection = getConnection()) {
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setInt(1, storyId);
+
+			ResultSet result = statement.executeQuery();
+			if(result.next()) {
+				return mapRow(result);
+			}
+
+		} catch(SQLException e) {
+			throw new RuntimeException(e);
+		}
+		return null;
+	}
+
+	@Override
+	public Story add(Story story) {
+		String query = "INSERT INTO stories (user_id, title, content, date_posted) " +
+							   "VALUES (?, ?, ?, ?);";
+
+		try(Connection connection = getConnection()) {
+			PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+			statement.setInt(1, story.getUserId());
+			statement.setString(2, story.getTitle());
+			statement.setString(3, story.getContent());
+			statement.setTimestamp(4, Timestamp.valueOf(story.getDatePosted()));
+
+			int rows = statement.executeUpdate();
+			if(rows > 0) {
+				ResultSet key = statement.getGeneratedKeys();
+
+				if(key.next()) {
+					int storyId = key.getInt(1);
+					return getByStoryId(storyId);
+				}
+			}
+		} catch(SQLException e) {
+			throw new RuntimeException(e);
+		}
+
+		return null;
 	}
 
 
