@@ -8,7 +8,9 @@ public interface CommentDao {
 
 	List<Comment> getAll();
 
-	List<Comment> getByStoryId();
+	List<Comment> getByStoryId(int storyId);
+
+	Comment getById(int commentId);
 
 	Comment add(Comment comment);
 
