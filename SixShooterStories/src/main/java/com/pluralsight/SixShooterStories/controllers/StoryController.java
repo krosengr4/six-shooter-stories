@@ -35,7 +35,16 @@ public class StoryController {
 		}
 	}
 
-	@GetMapping("{storyId}")
+	@GetMapping("/user/{userId}")
+	public List<Story> getStoriesByUserId(@PathVariable int userId) {
+		try {
+			return storyDao.getByUserId(userId);
+		} catch(Exception e) {
+			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "The server could not get that...");
+		}
+	}
+
+	@GetMapping("/{storyId}")
 	public Story getStoryById(@PathVariable int storyId) {
 		try {
 			var story = storyDao.getByStoryId(storyId);
