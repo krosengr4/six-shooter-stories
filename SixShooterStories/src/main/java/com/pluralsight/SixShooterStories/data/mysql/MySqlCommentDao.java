@@ -96,6 +96,7 @@ public class MySqlCommentDao extends MySqlBaseDao implements CommentDao {
 
 			int rows = statement.executeUpdate();
 			if(rows > 0) {
+				//Get the auto-incremented key(comment_id) generated when inserting new comment into the db
 				ResultSet key = statement.getGeneratedKeys();
 
 				if(key.next()) {

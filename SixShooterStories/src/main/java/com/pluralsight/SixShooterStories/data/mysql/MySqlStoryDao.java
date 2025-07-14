@@ -96,6 +96,7 @@ public class MySqlStoryDao extends MySqlBaseDao implements StoryDao {
 
 			int rows = statement.executeUpdate();
 			if(rows > 0) {
+				//Get the auto-incremented key(story_id) generated when inserting new story into db
 				ResultSet key = statement.getGeneratedKeys();
 
 				if(key.next()) {
