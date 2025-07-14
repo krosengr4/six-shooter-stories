@@ -110,12 +110,49 @@ public class MySqlCommentDao extends MySqlBaseDao implements CommentDao {
 
 	@Override
 	public void update(Comment comment) {
+		String query = "UPDATE comments " +
+							   "SET user_id = ?, " +
+							   "story_id = ?, " +
+							   "content = ?, " +
+							   "date_posted = ? " +
+							   "WHERE comment_id = ?;";
+		try(Connection connection = getConnection()) {
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setInt(1, comment.getUserId());
+			statement.setInt(2, comment.getStoryId());
+			statement.setString(3, comment.getContent());
+			statement.setTimestamp(4, Timestamp.valueOf(comment.getDatePosted()));
+			statement.setInt(5, comment.getUserId());
 
+			int rows = statement.executeUpdate();
+			if(rows > 0)
+				System.out.println("Success! The comment was updated!");
+			else
+				System.err.println("ERROR! The comment could not be updated!!!");
+
+		} catch(SQLException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	@Override
 	public void delete(int commentId) {
+		String query = "DELETE FROM comments " +
+							   "WHERE comment_id = ?;";
 
+		try(Connection connection = getConnection() {
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setInt(1, commentId);
+
+			int rows = statement.executeUpdate();
+			if(rows > 0)
+				System.out.println("Success! The comment was deleted!");
+			else
+				System.err.println("ERROR! Could not delete the comment!!!");
+
+		} catch(SQLException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	private Comment mapRow(ResultSet result) throws SQLException {
