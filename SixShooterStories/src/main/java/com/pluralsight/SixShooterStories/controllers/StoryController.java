@@ -49,6 +49,7 @@ public class StoryController {
 		try {
 			var story = storyDao.getByStoryId(storyId);
 
+			//Make sure there is a story with that ID
 			if (story == null) {
 				throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 			} else {
@@ -62,6 +63,7 @@ public class StoryController {
 	@PostMapping("")
 	public Story addStory(@RequestBody Story story, Principal principal) {
 		try {
+			//Get user ID from user that is logged on
 			String username = principal.getName();
 			User user = userDao.getByUsername(username);
 			int userId = user.getId();
@@ -75,31 +77,45 @@ public class StoryController {
 
 	@PutMapping("/{storyId}")
 	public void updateStory(@RequestBody Story updatedStory, @PathVariable int storyId, Principal principal) {
-
 		try {
+			//Get user ID from user that is logged on
 			User user = userDao.getByUsername(principal.getName());
 			int userId = user.getId();
+
 			Story story = storyDao.getByStoryId(storyId);
 
+			//Check to make sure there is a story and the story belongs to the user logged in
 			if(story != null && userId == story.getUserId()) {
 				updatedStory.setUserId(userId);
 				updatedStory.setStoryId(storyId);
 				storyDao.update(updatedStory);
-			}
-
-			if(story == null) {
-				throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 			} else {
-				if(userId != story.getUserId()) {
-					throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE);
-				}
+				throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
 			}
 
 		} catch(Exception e) {
-//			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "The server could not get that...");
-			throw new RuntimeException(e);
+			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "The server could not get that...");
 		}
+	}
 
+	@DeleteMapping("/{storyId}")
+	public void deleteStory(@PathVariable int storyId, Principal principal) {
+		try {
+			//Get user ID from user that is logged on
+			User user = userDao.getByUsername(principal.getName());
+			int userId = user.getId();
+
+			Story story = storyDao.getByStoryId(storyId);
+
+			//Check to make sure there is a story and the story belongs to the user logged in
+			if(story != null && userId == story.getUserId()) {
+				storyDao.delete(storyId);
+			} else {
+				throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+			}
+		} catch(Exception e) {
+			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "The server could not get that...");
+		}
 	}
 
 
