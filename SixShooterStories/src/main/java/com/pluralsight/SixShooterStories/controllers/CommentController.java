@@ -38,7 +38,7 @@ public class CommentController {
 		}
 	}
 
-	//POST endpoint = https://localhost:8080/comments/1
+	//POST endpoint = https://localhost:8080/comments/storyID
 	@PostMapping("/{storyId}")
 	public Comment addComent(@PathVariable int storyId, @RequestBody Comment comment, Principal principal) {
 		try {
@@ -52,8 +52,33 @@ public class CommentController {
 			return commentDao.add(comment);
 
 		} catch(Exception e) {
-//			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "The server could not get that...");
-			throw new RuntimeException(e);
+			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "The server could not get that...");
+		}
+	}
+
+	//PUT endpoint = https://localhost:8080/comments/commentID
+	@PutMapping("/{commentId}")
+	public void updateComment(@PathVariable int commentId, @RequestBody Comment updatedComment, Principal principal) {
+		try {
+			//Get the ID of the user that is logged in
+			User user = userDao.getByUsername(principal.getName());
+			int userId = user.getId();
+
+			Comment comment = commentDao.getById(commentId);
+
+			//Make sure comment exists and belongs to the user who is logged in
+			if(comment != null && userId == comment.getUserId()) {
+				updatedComment.setUserId(userId);
+				updatedComment.setCommentId(commentId);
+				updatedComment.setStoryId(comment.getStoryId());
+
+				commentDao.update(updatedComment);
+			} else {
+				throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+			}
+
+		} catch(Exception e) {
+			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "The server could not get that...");
 		}
 	}
 

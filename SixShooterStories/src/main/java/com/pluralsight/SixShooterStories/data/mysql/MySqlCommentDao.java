@@ -123,8 +123,8 @@ public class MySqlCommentDao extends MySqlBaseDao implements CommentDao {
 			statement.setInt(1, comment.getUserId());
 			statement.setInt(2, comment.getStoryId());
 			statement.setString(3, comment.getContent());
-			statement.setTimestamp(4, Timestamp.valueOf(comment.getDatePosted()));
-			statement.setInt(5, comment.getUserId());
+			statement.setTimestamp(4, Timestamp.valueOf(LocalDateTime.now()));
+			statement.setInt(5, comment.getCommentId());
 
 			int rows = statement.executeUpdate();
 			if(rows > 0)
