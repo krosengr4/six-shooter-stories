@@ -35,6 +35,21 @@ public class StoryController {
 		}
 	}
 
+	@GetMapping("{storyId}")
+	public Story getStoryById(@PathVariable int storyId) {
+		try {
+			var story = storyDao.getByStoryId(storyId);
+
+			if (story == null) {
+				throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+			} else {
+				return story;
+			}
+		} catch(Exception e) {
+			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "The server could not get that...");
+		}
+	}
+
 	@PostMapping("")
 	public Story addStory(@RequestBody Story story, Principal principal) {
 		try {
@@ -45,8 +60,7 @@ public class StoryController {
 			story.setUserId(userId);
 			return storyDao.add(story);
 		} catch(Exception e) {
-//			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "The server could not get that...");
-			throw new RuntimeException(e);
+			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "The server could not get that...");
 		}
 	}
 
