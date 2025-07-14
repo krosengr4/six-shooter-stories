@@ -4,6 +4,7 @@ import com.pluralsight.SixShooterStories.data.CommentDao;
 import com.pluralsight.SixShooterStories.data.StoryDao;
 import com.pluralsight.SixShooterStories.models.Comment;
 import org.apache.ibatis.jdbc.SQL;
+import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class MySqlCommentDao extends MySqlBaseDao implements CommentDao {
 	public MySqlCommentDao(DataSource dataSource) {
 		super(dataSource);
@@ -140,7 +142,7 @@ public class MySqlCommentDao extends MySqlBaseDao implements CommentDao {
 		String query = "DELETE FROM comments " +
 							   "WHERE comment_id = ?;";
 
-		try(Connection connection = getConnection() {
+		try(Connection connection = getConnection()) {
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setInt(1, commentId);
 

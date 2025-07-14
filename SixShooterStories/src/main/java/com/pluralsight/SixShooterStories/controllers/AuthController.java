@@ -40,14 +40,14 @@ public class AuthController {
 	@PostMapping("/login")
 	public ResponseEntity<LoginResponseDto> login(@Valid @RequestBody LoginDto loginDto) {
 
-		UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginDto.getUserName(), loginDto.getPassword());
+		UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword());
 
 		Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		String jwt = tokenProvider.createToken(authentication, false);
 
 		try {
-			User user = userDao.getByUserName(loginDto.getUserName());
+			User user = userDao.getByUsername(loginDto.getUsername());
 
 			if(user == null)
 				throw new ResponseStatusException(HttpStatus.NOT_FOUND);
@@ -65,13 +65,13 @@ public class AuthController {
 	public ResponseEntity<User> register(@Valid @RequestBody RegisterUserDto newUser) {
 
 		try {
-			boolean exists = userDao.exists(newUser.getUserName());
+			boolean exists = userDao.exists(newUser.getUsername());
 			if(exists) {
 				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User Already Exists.");
 			}
 
 			// create user
-			User user = userDao.create(new User(0, newUser.getUserName(), newUser.getPassword(), newUser.getRole()));
+			User user = userDao.create(new User(0, newUser.getUsername(), newUser.getPassword(), newUser.getRole()));
 
 			// create profile
 			Profile profile = new Profile();

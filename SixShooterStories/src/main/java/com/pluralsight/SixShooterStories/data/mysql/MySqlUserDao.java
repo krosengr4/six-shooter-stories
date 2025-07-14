@@ -7,7 +7,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
-import java.lang.module.ResolutionException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +60,7 @@ public class MySqlUserDao extends MySqlBaseDao implements UserDao {
 	}
 
 	@Override
-	public User getByUserName(String username) {
+	public User getByUsername(String username) {
 		String query = "SELECT * FROM users " +
 							   "WHERE username = ?;";
 
@@ -82,7 +81,7 @@ public class MySqlUserDao extends MySqlBaseDao implements UserDao {
 
 	@Override
 	public int getIdByUserName(String userName) {
-		User user = getByUserName(userName);
+		User user = getByUsername(userName);
 
 		if(user != null)
 			return user.getId();
@@ -97,13 +96,13 @@ public class MySqlUserDao extends MySqlBaseDao implements UserDao {
 
 		try(Connection connection = getConnection()) {
 			PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-			statement.setString(1, newUser.getUserName());
+			statement.setString(1, newUser.getUsername());
 			statement.setString(2, new BCryptPasswordEncoder().encode(newUser.getPassword()));
 			statement.setString(3, newUser.getRole());
 
 			int rows = statement.executeUpdate();
 			if(rows > 0) {
-				User user = getByUserName(newUser.getUserName());
+				User user = getByUsername(newUser.getUsername());
 				user.setPassword("");
 				return user;
 			}
@@ -116,7 +115,7 @@ public class MySqlUserDao extends MySqlBaseDao implements UserDao {
 
 	@Override
 	public boolean exists(String username) {
-		User user = getByUserName(username);
+		User user = getByUsername(username);
 		return user != null;
 	}
 

@@ -29,7 +29,7 @@ public class ProfileController {
 	public Profile getByUserId(Principal principal) {
 		try {
 			String userName = principal.getName();
-			User user = userDao.getByUserName(userName);
+			User user = userDao.getByUsername(userName);
 			int userId = user.getId();
 
 			return profileDao.getByUserId(userId);
@@ -42,7 +42,7 @@ public class ProfileController {
 	public void updateProfile(@RequestBody Profile profile, Principal principal) {
 		try {
 			String userName = principal.getName();
-			User user = userDao.getByUserName(userName);
+			User user = userDao.getByUsername(userName);
 			int userId = user.getId();
 
 			profile.setUserId(userId);

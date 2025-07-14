@@ -10,7 +10,7 @@ public interface UserDao {
 
 	User getUserById(int userId);
 
-	User getByUserName(String userName);
+	User getByUsername(String userName);
 
 	int getIdByUserName(String userName);
 

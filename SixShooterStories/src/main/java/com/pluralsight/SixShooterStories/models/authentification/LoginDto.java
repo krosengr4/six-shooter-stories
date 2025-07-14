@@ -7,16 +7,16 @@ public class LoginDto {
 	LoginResponseDTO is the data that is passed back to the client from the server at a login endpoint.
 	 */
 
-	private String userName;
+	private String username;
 	private String password;
 
 	//region Getters and Setters
-	public String getUserName() {
-		return userName;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public String getPassword() {
@@ -30,7 +30,7 @@ public class LoginDto {
 
 	@Override
 	public String toString() {
-		return "LoginDTO{" + "username='" + userName + '\'' + ", password='" + password + '\'' + '}';
+		return "LoginDTO{" + "username='" + username + '\'' + ", password='" + password + '\'' + '}';
 	}
 
 }

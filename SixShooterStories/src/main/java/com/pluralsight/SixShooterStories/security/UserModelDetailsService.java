@@ -28,7 +28,7 @@ public class UserModelDetailsService implements UserDetailsService {
 	public UserDetails loadUserByUsername(final String login) {
 		log.debug("Authentication user '{}'", login);
 		String lowerCaseLogin = login.toLowerCase();
-		return createSpringSecurityUser(lowerCaseLogin, userDao.getByUserName(lowerCaseLogin));
+		return createSpringSecurityUser(lowerCaseLogin, userDao.getByUsername(lowerCaseLogin));
 	}
 
 	private org.springframework.security.core.userdetails.User createSpringSecurityUser(String lowerCaseLogin, User user) {
@@ -39,7 +39,7 @@ public class UserModelDetailsService implements UserDetailsService {
 															.map(authority -> new SimpleGrantedAuthority(authority.getName()))
 															.collect(Collectors.toList());
 
-		return new org.springframework.security.core.userdetails.User(user.getUserName(), user.getPassword(), grantedAuthorities);
+		return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), grantedAuthorities);
 	}
 
 }

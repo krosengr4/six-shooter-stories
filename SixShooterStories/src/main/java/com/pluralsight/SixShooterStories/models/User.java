@@ -10,7 +10,7 @@ import java.util.Set;
 public class User {
 
 	private int id;
-	private String userName;
+	private String username;
 	@JsonIgnore
 	private String password;
 	@JsonIgnore
@@ -23,7 +23,7 @@ public class User {
 
 	public User(int id, String userName, String password, String authorities) {
 		this.id = id;
-		this.userName = userName;
+		this.username = userName;
 		this.password = password;
 		if(authorities != null)
 			this.setAuthorities(authorities);
@@ -40,12 +40,12 @@ public class User {
 		this.id = id;
 	}
 
-	public String getUserName() {
-		return userName;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public String getPassword() {
@@ -95,21 +95,21 @@ public class User {
 		User user = (User) o;
 		return id == user.id &&
 					   isActivated == user.isActivated &&
-					   Objects.equals(userName, user.userName) &&
+					   Objects.equals(username, user.username) &&
 					   Objects.equals(password, user.password) &&
 					   Objects.equals(authorities, user.authorities);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, userName, password, isActivated, authorities);
+		return Objects.hash(id, username, password, isActivated, authorities);
 	}
 
 	@Override
 	public String toString() {
 		return "User{" +
 					   "id=" + id +
-					   ", username='" + userName + '\'' +
+					   ", username='" + username + '\'' +
 					   ", activated=" + isActivated +
 					   ", authorities=" + authorities +
 					   '}';
