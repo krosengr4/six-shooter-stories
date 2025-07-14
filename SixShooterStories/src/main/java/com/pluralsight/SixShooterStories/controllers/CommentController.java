@@ -82,5 +82,26 @@ public class CommentController {
 		}
 	}
 
+	//DELETE endpoint = https://localhost:8080/comments/commentID
+	@DeleteMapping("/{commentId}")
+	public void deleteComment(@PathVariable int commentId, Principal principal) {
+		try {
+			//Get the ID of the user that is logged on
+			User user = userDao.getByUsername(principal.getName());
+			int userId = user.getId();
+
+			Comment comment = commentDao.getById(commentId);
+
+			//Check to make sure that comment exists and that it belongs to the user that is logged on
+			if(comment != null && userId == comment.getUserId()) {
+				commentDao.delete(commentId);
+			} else {
+				throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+			}
+
+		} catch(Exception e) {
+			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "The server could not get that...");
+		}
+	}
 
 }
