@@ -38,6 +38,26 @@ public class CommentController {
 		}
 	}
 
+	//GET endpoint = https://localhost:8080/comments/storyID
+	@GetMapping("/story/{storyId}")
+	public List<Comment> getCommentsOnStory(@PathVariable int storyId) {
+		try {
+			return commentDao.getByStoryId(storyId);
+		} catch(Exception e) {
+			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "The server could not get that...");
+		}
+	}
+
+	//GET endpoint = https://localhost:8080/comments/commentID
+	@GetMapping("/{commentId}")
+	public Comment getCommentById(@PathVariable int commentId) {
+		try {
+			return commentDao.getById(commentId);
+		} catch(Exception e) {
+			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "The server could not get that...");
+		}
+	}
+
 	//POST endpoint = https://localhost:8080/comments/storyID
 	@PostMapping("/{storyId}")
 	public Comment addComent(@PathVariable int storyId, @RequestBody Comment comment, Principal principal) {
