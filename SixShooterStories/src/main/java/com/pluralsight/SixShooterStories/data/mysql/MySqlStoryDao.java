@@ -123,7 +123,7 @@ public class MySqlStoryDao extends MySqlBaseDao implements StoryDao {
 			statement.setInt(1, story.getUserId());
 			statement.setString(2, story.getTitle());
 			statement.setString(3, story.getContent());
-			statement.setTimestamp(4, Timestamp.valueOf(story.getDatePosted()));
+			statement.setTimestamp(4, Timestamp.valueOf(LocalDateTime.now()));
 			statement.setInt(5, story.getStoryId());
 
 			int rows = statement.executeUpdate();

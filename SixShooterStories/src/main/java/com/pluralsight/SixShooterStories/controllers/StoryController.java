@@ -73,5 +73,34 @@ public class StoryController {
 		}
 	}
 
+	@PutMapping("/{storyId}")
+	public void updateStory(@RequestBody Story updatedStory, @PathVariable int storyId, Principal principal) {
+
+		try {
+			User user = userDao.getByUsername(principal.getName());
+			int userId = user.getId();
+			Story story = storyDao.getByStoryId(storyId);
+
+			if(story != null && userId == story.getUserId()) {
+				updatedStory.setUserId(userId);
+				updatedStory.setStoryId(storyId);
+				storyDao.update(updatedStory);
+			}
+
+			if(story == null) {
+				throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+			} else {
+				if(userId != story.getUserId()) {
+					throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE);
+				}
+			}
+
+		} catch(Exception e) {
+//			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "The server could not get that...");
+			throw new RuntimeException(e);
+		}
+
+	}
+
 
 }
