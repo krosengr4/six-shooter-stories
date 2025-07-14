@@ -14,6 +14,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
+//http://localhost:8080/stories
 @RequestMapping("stories")
 public class StoryController {
 
@@ -26,6 +27,7 @@ public class StoryController {
 		this.userDao = userDao;
 	}
 
+	//GET endpoint = http://localhost:8080/stories
 	@GetMapping("")
 	public List<Story> getAllStories() {
 		try {
@@ -35,6 +37,7 @@ public class StoryController {
 		}
 	}
 
+	//GET endpoint = http://localhost:8080/stories/user/1
 	@GetMapping("/user/{userId}")
 	public List<Story> getStoriesByUserId(@PathVariable int userId) {
 		try {
@@ -44,6 +47,7 @@ public class StoryController {
 		}
 	}
 
+	//GET endpoint = http://localhost:8080/stories/1
 	@GetMapping("/{storyId}")
 	public Story getStoryById(@PathVariable int storyId) {
 		try {
@@ -60,6 +64,7 @@ public class StoryController {
 		}
 	}
 
+	//POST endpoint = http://localhost:8080/stories
 	@PostMapping("")
 	public Story addStory(@RequestBody Story story, Principal principal) {
 		try {
@@ -75,6 +80,7 @@ public class StoryController {
 		}
 	}
 
+	//PUT endpoint = http://localhost:8080/stories/1
 	@PutMapping("/{storyId}")
 	public void updateStory(@RequestBody Story updatedStory, @PathVariable int storyId, Principal principal) {
 		try {
@@ -98,6 +104,7 @@ public class StoryController {
 		}
 	}
 
+	//DELETE endpoint = http://localhost:8080/stories/1
 	@DeleteMapping("/{storyId}")
 	public void deleteStory(@PathVariable int storyId, Principal principal) {
 		try {
@@ -117,6 +124,4 @@ public class StoryController {
 			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "The server could not get that...");
 		}
 	}
-
-
 }

@@ -12,8 +12,9 @@ import org.springframework.web.server.ResponseStatusException;
 import java.security.Principal;
 
 @RestController
-@RequestMapping("profile")
 @CrossOrigin
+//http://localhost:8080/profile
+@RequestMapping("profile")
 public class ProfileController {
 
 	private final ProfileDao profileDao;
@@ -25,9 +26,11 @@ public class ProfileController {
 		this.userDao = userDao;
 	}
 
+	//GET endpoint = //http://localhost:8080/profile
 	@GetMapping("")
 	public Profile getByUserId(Principal principal) {
 		try {
+			//Get userID of the user that is logged in
 			String userName = principal.getName();
 			User user = userDao.getByUsername(userName);
 			int userId = user.getId();
@@ -38,9 +41,11 @@ public class ProfileController {
 		}
 	}
 
+	//GET endpoint = //http://localhost:8080/profile
 	@PutMapping("")
 	public void updateProfile(@RequestBody Profile profile, Principal principal) {
 		try {
+			//Get userID of the user that is logged in
 			String userName = principal.getName();
 			User user = userDao.getByUsername(userName);
 			int userId = user.getId();
@@ -49,8 +54,7 @@ public class ProfileController {
 			profileDao.update(profile);
 
 		} catch(Exception e) {
-//			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad :(");
-			throw new RuntimeException(e);
+			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad :(");
 		}
 	}
 }
