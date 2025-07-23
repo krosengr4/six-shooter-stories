@@ -6,12 +6,12 @@ import java.time.LocalDate;
 public class Profile {
 
 	private int userId;
-	private String firstName;
-	private String lastName;
-	private String email;
-	private String githubLink;
-	private String city;
-	private String state;
+	private String firstName = "";
+	private String lastName = "";
+	private String email = "";
+	private String githubLink = "";
+	private String city = "";
+	private String state = "";
 	Date dateRegistered;
 
 	public Profile() {}

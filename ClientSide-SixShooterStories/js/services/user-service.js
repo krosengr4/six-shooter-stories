@@ -56,14 +56,7 @@ class UserService {
 
     getUserName()
     {
-        if(this.isLoggedIn && this.currentUser.userId == 4){
-            return 'Kevin The Goat!'
-        } else if(this.isLoggedIn){
-            return this.currentUser.username
-        } else {
-            return '';
-        }
-        // return this.isLoggedIn() ? this.currentUser.username : '';
+        return this.isLoggedIn() ? this.currentUser.username : '';
     }
 
     isLoggedIn()

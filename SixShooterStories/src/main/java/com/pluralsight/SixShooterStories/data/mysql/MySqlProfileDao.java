@@ -85,15 +85,16 @@ public class MySqlProfileDao extends MySqlBaseDao implements ProfileDao {
 			statement.setString(7, profile.getState());
 			statement.setDate(8, Date.valueOf(LocalDate.now()));
 
-			int rows = statement.executeUpdate();
-			if(rows > 0) {
-				return getByUserId(profile.getUserId());
-			}
+//			int rows = statement.executeUpdate();
+//			if(rows > 0) {
+//				return getByUserId(profile.getUserId());
+//			}
+			statement.executeUpdate();
 
+			return profile;
 		} catch(SQLException e) {
 			throw new RuntimeException(e);
 		}
-		return null;
 	}
 
 	private Profile mapRow(ResultSet result) throws SQLException {
