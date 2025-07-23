@@ -1,0 +1,39 @@
+<div id="register-form" class="modal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" >Create Account</h5>
+        <button type="button" class="btn-close" onclick="hideRegisterForm()" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true"></span>
+        </button>
+      </div>
+      <form id="registerForm" onsubmit="event.preventDefault(); userService.register(
+        document.getElementById('username').value,
+        document.getElementById('password').value,
+        document.getElementById('confirm').value
+      ); hideRegisterForm();">
+        <div class="modal-body">
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="username" placeholder="Username" required>
+            <label for="username">Create A Username</label>
+          </div>
+          <div class="form-floating mb-3">
+            <input type="password" class="form-control" id="password" placeholder="Password" required>
+            <label for="password">Create A Password</label>
+          </div>
+          <div class="form-floating mb-3">
+            <input type="password" class="form-control" id="confirm" placeholder="Confirm" required>
+            <label for="confirm">Confirm Your Password</label>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="hideRegisterForm()">Cancel</button>
+          <button type="submit" class="btn btn-primary">
+            Create Account
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+</div>
