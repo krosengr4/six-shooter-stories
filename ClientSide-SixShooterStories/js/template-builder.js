@@ -3,7 +3,7 @@ let templateBuilder = {}
 class TemplateBuilder {
 
     build(templateName, value, target, callback) {
-        axios.get(`template/${templateName}.html`)
+        axios.get(`templates/${templateName}.html`)
             .then(response => {
                 try {
                     const template = response.data;
@@ -26,7 +26,7 @@ class TemplateBuilder {
     }
 
     append(templateName, value, target) {
-        axios.get(`template/${templateName}.html`)
+        axios.get(`templates/${templateName}.html`)
             .then(response => {
                 try {
                     const template = response.data;
