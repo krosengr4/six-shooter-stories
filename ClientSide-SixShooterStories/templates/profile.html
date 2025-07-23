@@ -26,12 +26,12 @@
     <label for="state">State</label>
   </div>
   <div class="form-floating mb-3">
-    <input type="text" class="form-control" id="github" value='{{github}}'>
+    <input type="text" class="form-control" id="github" value='{{githubLink}}'>
     <label for="github">GitHub Link</label>
   </div>
   <div class="form-floating mb-3">
-    <input type="text" class="form-control" id="dateRegistered" value='{{dateRegistered}}'>
-    <label for="dateRegistered">Date Registered</label>
+    <p3 type="date" class="form-control" id="dateRegistered" value='{{dateRegistered}}'>{{dateRegistered}}</p3>
+    <label for="dateRegistered">Date Registered: </label>
   </div>
 
   <button class="btn btn-outline-danger" onclick="saveProfile()">Update</button>

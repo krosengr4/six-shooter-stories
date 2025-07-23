@@ -7,6 +7,7 @@ class ProfileService {
 
         axios.get(url) 
             .then(response => {
+                console.log(response.data);
                 templateBuilder.build("profile", response.data, "main")
 
             })

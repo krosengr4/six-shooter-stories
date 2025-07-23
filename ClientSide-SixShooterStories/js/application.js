@@ -37,16 +37,18 @@ function saveProfile()
     const email = document.getElementById("email").value;
     const city = document.getElementById("city").value;
     const state = document.getElementById("state").value;
-    const github = document.getElementById("github").value;
-    // Maybe want date registered here
+    const githubLink = document.getElementById("github").value;
+    console.log(githubLink);
+    const dateRegistered = document.getElementById("dateRegistered").value;
 
     const profile = {
         firstName,
         lastName,
         email,
-        github,
+        githubLink,
         city,
-        state
+        state,
+        dateRegistered
     };
 
     profileService.updateProfile(profile);
