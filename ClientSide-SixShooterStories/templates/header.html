@@ -1,0 +1,24 @@
+{{#loggedin}}
+<div id="links">
+    <a href="#" onclick="loadHome()"></a>
+    <a href="#" onclick="showProfile()"></a>
+</div>
+
+<div>
+    Welcome<span style="font-weight: bold;">{{username}}</span> | <a href="#" onclick="userService.logout();return false;">logout</a>
+</div>
+
+{{/loggedin}}
+{{loggedout}}
+<div id="links">
+    <a href="#" onclick="loadHome()"></a>
+</div>
+
+<div>
+    <a href="#" onclick="showLoginForm();return false;">login</a>
+</div>
+<div>
+    <a href="#" onclick="showRegisterForm();return false;">Create Account</a>
+</div>
+
+{{/loggedout}}
