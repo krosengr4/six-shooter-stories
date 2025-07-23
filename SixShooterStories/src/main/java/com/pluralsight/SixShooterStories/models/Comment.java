@@ -8,15 +8,17 @@ public class Comment {
 	int userId;
 	int storyId;
 	String content;
+	String author;
 	LocalDateTime datePosted;
 
 	public Comment() {}
 
-	public Comment(int commentId, int userId, int storyId, String content, LocalDateTime datePosted) {
+	public Comment(int commentId, int userId, int storyId, String content, String author, LocalDateTime datePosted) {
 		this.commentId = commentId;
 		this.userId = userId;
 		this.storyId = storyId;
 		this.content = content;
+		this.author = author;
 		this.datePosted = datePosted;
 	}
 
@@ -51,6 +53,14 @@ public class Comment {
 
 	public void setContent(String content) {
 		this.content = content;
+	}
+
+	public String getAuthor() {
+		return author;
+	}
+
+	public void setAuthor(String author) {
+		this.author = author;
 	}
 
 	public LocalDateTime getDatePosted() {

@@ -84,15 +84,16 @@ public class MySqlCommentDao extends MySqlBaseDao implements CommentDao {
 
 	@Override
 	public Comment add(Comment comment) {
-		String query = "INSERT INTO comments (user_id, story_id, content, date_posted) " +
-							   "VALUES (?, ?, ?, ?);";
+		String query = "INSERT INTO comments (user_id, story_id, content, author, date_posted) " +
+							   "VALUES (?, ?, ?, ?, ?);";
 
 		try(Connection connection = getConnection()) {
 			PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 			statement.setInt(1, comment.getUserId());
 			statement.setInt(2, comment.getStoryId());
 			statement.setString(3, comment.getContent());
-			statement.setTimestamp(4, Timestamp.valueOf(LocalDateTime.now()));
+			statement.setString(4, comment.getAuthor());
+			statement.setTimestamp(5, Timestamp.valueOf(LocalDateTime.now()));
 
 			int rows = statement.executeUpdate();
 			if(rows > 0) {
@@ -117,6 +118,7 @@ public class MySqlCommentDao extends MySqlBaseDao implements CommentDao {
 							   "SET user_id = ?, " +
 							   "story_id = ?, " +
 							   "content = ?, " +
+							   "author = ?, " +
 							   "date_posted = ? " +
 							   "WHERE comment_id = ?;";
 		try(Connection connection = getConnection()) {
@@ -124,8 +126,9 @@ public class MySqlCommentDao extends MySqlBaseDao implements CommentDao {
 			statement.setInt(1, comment.getUserId());
 			statement.setInt(2, comment.getStoryId());
 			statement.setString(3, comment.getContent());
-			statement.setTimestamp(4, Timestamp.valueOf(LocalDateTime.now()));
-			statement.setInt(5, comment.getCommentId());
+			statement.setString(4, comment.getAuthor());
+			statement.setTimestamp(5, Timestamp.valueOf(LocalDateTime.now()));
+			statement.setInt(6, comment.getCommentId());
 
 			int rows = statement.executeUpdate();
 			if(rows > 0)
@@ -163,8 +166,9 @@ public class MySqlCommentDao extends MySqlBaseDao implements CommentDao {
 		int userId = result.getInt("user_id");
 		int storyId = result.getInt("story_id");
 		String content = result.getString("content");
+		String author = result.getString("author");
 		LocalDateTime datePosted = result.getTimestamp("date_posted").toLocalDateTime();
 
-		return new Comment(commentId, userId, storyId, content, datePosted);
+		return new Comment(commentId, userId, storyId, content, author, datePosted);
 	}
 }

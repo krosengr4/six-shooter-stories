@@ -60,14 +60,16 @@ public class CommentController {
 
 	//POST endpoint = https://localhost:8080/comments/storyID
 	@PostMapping("/{storyId}")
-	public Comment addComent(@PathVariable int storyId, @RequestBody Comment comment, Principal principal) {
+	public Comment addComment(@PathVariable int storyId, @RequestBody Comment comment, Principal principal) {
 		try {
 			//Get the ID of the user that is logged in
-			User user = userDao.getByUsername(principal.getName());
+			String userName = principal.getName();
+			User user = userDao.getByUsername(userName);
 			int userId = user.getId();
 
 			comment.setUserId(userId);
 			comment.setStoryId(storyId);
+			comment.setAuthor(userName);
 
 			return commentDao.add(comment);
 
