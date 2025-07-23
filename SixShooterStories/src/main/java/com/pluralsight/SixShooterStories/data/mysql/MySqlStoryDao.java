@@ -84,15 +84,16 @@ public class MySqlStoryDao extends MySqlBaseDao implements StoryDao {
 
 	@Override
 	public Story add(Story story) {
-		String query = "INSERT INTO stories (user_id, title, content, date_posted) " +
-							   "VALUES (?, ?, ?, ?);";
+		String query = "INSERT INTO stories (user_id, title, content, author, date_posted) " +
+							   "VALUES (?, ?, ?, ?, ?);";
 
 		try(Connection connection = getConnection()) {
 			PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 			statement.setInt(1, story.getUserId());
 			statement.setString(2, story.getTitle());
 			statement.setString(3, story.getContent());
-			statement.setTimestamp(4, Timestamp.valueOf(LocalDateTime.now()));
+			statement.setString(4, story.getAuthor());
+			statement.setTimestamp(5, Timestamp.valueOf(LocalDateTime.now()));
 
 			int rows = statement.executeUpdate();
 			if(rows > 0) {
@@ -117,6 +118,7 @@ public class MySqlStoryDao extends MySqlBaseDao implements StoryDao {
 							   "SET user_id = ?, " +
 							   "title = ?, " +
 							   "content = ?, " +
+							   "author = ?, " +
 							   "date_posted = ? " +
 							   "WHERE story_id = ?;";
 		try(Connection connection = getConnection()) {
@@ -124,8 +126,9 @@ public class MySqlStoryDao extends MySqlBaseDao implements StoryDao {
 			statement.setInt(1, story.getUserId());
 			statement.setString(2, story.getTitle());
 			statement.setString(3, story.getContent());
-			statement.setTimestamp(4, Timestamp.valueOf(LocalDateTime.now()));
-			statement.setInt(5, story.getStoryId());
+			statement.setString(4, story.getAuthor());
+			statement.setTimestamp(5, Timestamp.valueOf(LocalDateTime.now()));
+			statement.setInt(6, story.getStoryId());
 
 			int rows = statement.executeUpdate();
 			if(rows > 0)
@@ -163,8 +166,9 @@ public class MySqlStoryDao extends MySqlBaseDao implements StoryDao {
 		int userId = result.getInt("user_id");
 		String title = result.getString("title");
 		String content = result.getString("content");
+		String author = result.getString("author");
 		LocalDateTime datePosted = result.getTimestamp("date_posted").toLocalDateTime();
 
-		return new Story(storyId, userId, title, content, datePosted);
+		return new Story(storyId, userId, title, content, author, datePosted);
 	}
 }

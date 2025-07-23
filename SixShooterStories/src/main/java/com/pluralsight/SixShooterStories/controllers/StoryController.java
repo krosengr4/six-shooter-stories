@@ -74,6 +74,7 @@ public class StoryController {
 			int userId = user.getId();
 
 			story.setUserId(userId);
+			story.setAuthor(username);
 			return storyDao.add(story);
 		} catch(Exception e) {
 			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "The server could not get that...");

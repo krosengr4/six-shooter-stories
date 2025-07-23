@@ -10,15 +10,17 @@ public class Story {
 	int userId;
 	String title;
 	String content;
+	String author;
 	LocalDateTime datePosted;
 
 	public Story() {}
 
-	public Story(int storyId, int userId, String title, String content, LocalDateTime datePosted) {
+	public Story(int storyId, int userId, String title, String content, String author, LocalDateTime datePosted) {
 		this.storyId = storyId;
 		this.userId = userId;
 		this.title = title;
 		this.content = content;
+		this.author = author;
 		this.datePosted = datePosted;
 	}
 
@@ -53,6 +55,14 @@ public class Story {
 
 	public void setContent(String content) {
 		this.content = content;
+	}
+
+	public String getAuthor() {
+		return author;
+	}
+
+	public void setAuthor(String author) {
+		this.author = author;
 	}
 
 	public LocalDateTime getDatePosted() {
