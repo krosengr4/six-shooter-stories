@@ -1,0 +1,47 @@
+header
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    height: 10vh;
+
+    padding: 5px 15px;
+    border-bottom: solid 1px #555;
+    box-shadow: 5px 2px #eee;
+}
+
+header img
+{
+    height: 100%;
+}
+
+header div{
+    height: 100%;
+    display: flex;
+    align-items: flex-end;
+}
+
+header #links
+{
+    gap: 20px;
+    justify-content: flex-start;
+    align-items: flex-end;
+    padding-right: 20px;
+}
+
+header .cart
+{
+    font-size: x-large;
+    padding-left: 10px;
+    padding-right: 10px;
+    cursor: pointer;
+}
+
+header .cart #cart-items
+{
+    font-size: .7em;
+    height: 50%;
+    align-items: start;
+    padding-left: 5px;
+}
