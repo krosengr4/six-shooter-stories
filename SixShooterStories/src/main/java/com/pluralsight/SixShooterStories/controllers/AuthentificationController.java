@@ -23,14 +23,14 @@ import javax.validation.Valid;
 
 @RestController
 @CrossOrigin
-public class AuthController {
+public class AuthentificationController {
 
 	private final TokenProvider tokenProvider;
 	private final AuthenticationManagerBuilder authenticationManagerBuilder;
 	private final UserDao userDao;
 	private final ProfileDao profileDao;
 
-	public AuthController(TokenProvider tokenProvider, AuthenticationManagerBuilder authenticationManagerBuilder, UserDao userDao, ProfileDao profileDao) {
+	public AuthentificationController(TokenProvider tokenProvider, AuthenticationManagerBuilder authenticationManagerBuilder, UserDao userDao, ProfileDao profileDao) {
 		this.tokenProvider = tokenProvider;
 		this.authenticationManagerBuilder = authenticationManagerBuilder;
 		this.userDao = userDao;

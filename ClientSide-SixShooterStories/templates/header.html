@@ -1,17 +1,25 @@
 {{#loggedin}}
 <div id="links">
-    <a href="#" onclick="loadHome()"></a>
-    <a href="#" onclick="showProfile()"></a>
+    <a href="#" onclick="loadHome()">Home</a>
+    <a href="#" onclick="showProfile()">Profile</a>
 </div>
 
-<div>
+<!-- <div>
     Welcome<span style="font-weight: bold;">{{username}}</span> | <a href="#" onclick="userService.logout();return false;">logout</a>
-</div>
+</div> -->
+
+<div>
+    Welcome&nbsp;<span style="font-weight: bold">{{username}}</span>&nbsp;|&nbsp;<a href="#" onclick="userService.logout();return false;">logout</a>
+    <div class="cart" onclick="showCart()">
+        <i class="fa-solid fa-cart-shopping"></i>
+        <div id="cart-items">0</div>
+    </div>
+</div> 
 
 {{/loggedin}}
 {{loggedout}}
 <div id="links">
-    <a href="#" onclick="loadHome()"></a>
+    <a href="#" onclick="loadHome()">Home</a>
 </div>
 
 <div>
