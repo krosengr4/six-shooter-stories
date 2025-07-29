@@ -121,6 +121,7 @@ class UserService {
 
         axios.post(url, login)
             .then(response => {
+            console.log(response.data);
                 this.saveUser(response.data)
                 this.setHeaderLogin();
 
@@ -129,6 +130,7 @@ class UserService {
                 cartService.loadCart();
             })
             .catch(error => {
+            console.log(error);
                 const data = {
                     error: "Login failed."
                 };
