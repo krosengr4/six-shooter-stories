@@ -2,13 +2,14 @@
 <div class="product">
     <div>
         <h4>{{title}}</h4>
-        <h6>{{author}}</h6>
+        <h5>Created By: {{author}}</h5>
         <div>
             <p>{{content}}</p>
+            <p>Created On: {{datePosted}}</p>
         </div>
     </div>
     <div class="add-button">
-        <button class="btn btn-success" onclick="cartService.addToCart({{storyId}})">Add to Cart</button>
+        <button class="btn btn-success" onclick="cartService.addToCart({{storyId}})">Add A Comment</button>
     </div>
 </div>
 {{/stories}}

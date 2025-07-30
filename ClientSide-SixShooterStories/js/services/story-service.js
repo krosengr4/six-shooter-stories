@@ -8,10 +8,15 @@ class StoryService {
         axios.get(url)
             .then(response => {
                 console.log(response.data);
+                let data = {};
+                data.stories = response.data;
+
+                templateBuilder.build('story', data, 'content', this.enableButtons);
+
             }) 
             .catch(error => {
                 const data = {
-                    error: "Load profile failed."
+                    error: "Failed to load stories."
                 };
 
                 templateBuilder.append("error", data, "errors")

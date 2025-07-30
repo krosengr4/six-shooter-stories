@@ -24,6 +24,8 @@ function login() {
 
 function loadHome() {
     templateBuilder.build('home',{},'main')
+
+    storyService.loadStories();
 }
 
 function editProfile() {
