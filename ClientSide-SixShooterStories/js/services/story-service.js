@@ -24,9 +24,9 @@ class StoryService {
     }
 
     enableButtons() {
-        const buttons = [...document.querySelectorAll(".add-buttons")];
+        const buttons = [...document.querySelectorAll(".add-button")];
 
-        if(userService.isLoggedIn()) {
+        if(userService.isLoggedIn() == true) {
             buttons.forEach(button => {
                 button.classList.remove("invisible")
             });
