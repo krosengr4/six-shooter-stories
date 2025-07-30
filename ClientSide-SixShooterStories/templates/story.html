@@ -1,5 +1,4 @@
 {{#stories}}
-{{#products}}
 <div class="product">
     <div>
         <h4>{{title}}</h4>
@@ -8,8 +7,8 @@
             <p>{{content}}</p>
         </div>
     </div>
-    <!-- <div class="comment-button">
-        <button class="btn btn-success" onclick="cartService.addToCart({{productId}})">Add to Cart</button>
+    <div class="add-button">
+        <button class="btn btn-success" onclick="cartService.addToCart({{storyId}})">Add to Cart</button>
     </div>
-</div> -->
-{{/products}}
+</div>
+{{/stories}}

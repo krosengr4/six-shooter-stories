@@ -18,4 +18,22 @@ class StoryService {
              })
     }
 
+    enableButtons() {
+        const buttons = [...document.querySelectorAll(".add-buttons")];
+
+        if(userService.isLoggedIn()) {
+            buttons.forEach(button => {
+                button.classList.remove("invisible")
+            });
+        } else {
+            buttons.forEach(button => {
+                button.classList.add("invisible")
+            });
+        }
+    }
+
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    storyService = new StoryService();
+})
