@@ -20,14 +20,24 @@ export class AuthService {
         });
     }
 
-    async login(credentials) {
+    async login(username, password) {
         try {
-            const response = await this.api.post(`${this.apiUrl}/login`, credentials);
-            if (response.data.token) {
-                this.setToken(response.data.token);
-                this.setUser(response.data.user);
+            const url = "http://localhost:8080/login";
+            const login = {
+                username: username,
+                password: password
             }
-            return response.data;
+
+            axios.post(url, login)
+            .then(response => {
+                console.log(response.data)
+            })
+            // const response = await this.api.post(`${this.apiUrl}/login`, credentials);
+            // if (response.data.token) {
+            //     this.setToken(response.data.token);
+            //     this.setUser(response.data.user);
+            // }
+            // return response.data;
         } catch (error) {
             console.error('Login error:', error);
             throw error;
