@@ -3,21 +3,21 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" >Add Comment</h5>
-        <button type="button" class="btn-close" onclick="hideModalForm()" data-bs-dismiss="modal" aria-label="Close">
+        <button type="button" class="btn-close" onclick="hideCommentForm()" data-bs-dismiss="modal" aria-label="Close">
           <span aria-hidden="true"></span>
         </button>
       </div>
 
       <div class="modal-body">
         <div class="form-floating mb-3">
-          <input type="text" class="form-control" id="username" placeholder="username">
-          <label for="username">Username</label>
+          <input type="text" class="form-control" id="comment" placeholder="Add your comment">
+          <label for="comment">Your Comment</label>
         </div>
       </div>
 
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" onclick="addComment()">Add Comment</button>
-        <button type="button" class="btn btn-secondary" onclick="hideModalForm()">Cancel</button>
+        <button type="button" class="btn btn-primary" onclick="commentService.addComment({{storyId}})">Add Comment</button>
+        <button type="button" class="btn btn-secondary" onclick="hideCommentForm()">Cancel</button>
       </div>
     </div>
   </div>

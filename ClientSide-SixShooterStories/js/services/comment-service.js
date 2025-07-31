@@ -7,11 +7,11 @@ class CommentService {
 
         axios.get(url)
         .then(response => {
-            console.log(response.data);
+            console.log(response);
         })
         .catch(err => {
             console.log(err);
-            
+
             const data = {
                 error: "Failed to load comments."
             };
@@ -20,8 +20,8 @@ class CommentService {
         })
     }
 
-    addComment() {
-        const url = `${config.baseUrl}/comments/{storyId}`;
+    addComment(storyId) {
+        const url = `${config.baseUrl}/comments/${storyId}`;
         const comment = {
             content: content
         }

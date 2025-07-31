@@ -14,6 +14,14 @@ function hideRegisterForm() {
     templateBuilder.clear('register');
 }
 
+function hideCommentForm() {
+    templateBuilder.clear('comment');
+}
+
+function showCommentForm() {
+    templateBuilder.build('comment', {}, 'comment');
+}
+
 function login() {
     const username = document.getElementById("username").value;
     const password = document.getElementById("password").value;
