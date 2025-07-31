@@ -16,13 +16,13 @@ public class HomeController {
         return "forward:/index.html";
     }
     
-    @GetMapping("/stories")
-    public String stories() {
-        return "forward:/index.html";
-    }
+    // @GetMapping("/stories")
+    // public String stories() {
+    //     return "forward:/index.html";
+    // }
     
-    @GetMapping("/profile")
-    public String profile() {
-        return "forward:/index.html";
-    }
+    // @GetMapping("/profile")
+    // public String profile() {
+    //     return "forward:/index.html";
+    // }
 }
