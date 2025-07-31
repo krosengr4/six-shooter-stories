@@ -1,0 +1,118 @@
+<section class="profile">
+    {{#user}}
+    <div class="profile-header">
+        <div class="profile-avatar">
+            {{#avatar}}
+            <img src="{{avatar}}" alt="{{username}}'s avatar">
+            {{/avatar}}
+            {{^avatar}}
+            <div class="default-avatar">{{initials}}</div>
+            {{/avatar}}
+        </div>
+        <div class="profile-info">
+            <h2>{{displayName}}</h2>
+            <p class="username">@{{username}}</p>
+            {{#bio}}
+            <p class="bio">{{bio}}</p>
+            {{/bio}}
+            <div class="profile-stats">
+                <span class="stat">
+                    <strong>{{storyCount}}</strong> Stories
+                </span>
+                <span class="stat">
+                    <strong>{{commentCount}}</strong> Comments
+                </span>
+                <span class="stat">
+                    Member since <strong>{{joinDate}}</strong>
+                </span>
+            </div>
+        </div>
+        {{#isOwnProfile}}
+        <div class="profile-actions">
+            <button id="edit-profile-btn">Edit Profile</button>
+        </div>
+        {{/isOwnProfile}}
+    </div>
+    
+    <div class="profile-content">
+        <div class="profile-tabs">
+            <button class="tab-btn active" data-tab="stories">My Stories</button>
+            <button class="tab-btn" data-tab="comments">My Comments</button>
+            {{#isOwnProfile}}
+            <button class="tab-btn" data-tab="settings">Settings</button>
+            {{/isOwnProfile}}
+        </div>
+        
+        <div class="tab-content" id="stories-tab">
+            {{#userStories}}
+            <div class="user-stories">
+                {{#.}}
+                <div class="story-item">
+                    <h4><a href="#story/{{id}}">{{title}}</a></h4>
+                    <p>{{excerpt}}</p>
+                    <span class="story-date">{{formattedDate}}</span>
+                </div>
+                {{/.}}
+            </div>
+            {{/userStories}}
+            
+            {{^userStories}}
+            <div class="no-content">
+                <p>No stories yet.</p>
+                {{#isOwnProfile}}
+                <button class="create-story-btn">Write Your First Story</button>
+                {{/isOwnProfile}}
+            </div>
+            {{/userStories}}
+        </div>
+        
+        <div class="tab-content hidden" id="comments-tab">
+            {{#userComments}}
+            <div class="user-comments">
+                {{#.}}
+                <div class="comment-item">
+                    <p>{{content}}</p>
+                    <span class="comment-context">on <a href="#story/{{storyId}}">{{storyTitle}}</a></span>
+                    <span class="comment-date">{{formattedDate}}</span>
+                </div>
+                {{/.}}
+            </div>
+            {{/userComments}}
+            
+            {{^userComments}}
+            <div class="no-content">
+                <p>No comments yet.</p>
+            </div>
+            {{/userComments}}
+        </div>
+        
+        {{#isOwnProfile}}
+        <div class="tab-content hidden" id="settings-tab">
+            <form class="settings-form" id="profile-settings-form">
+                <div class="form-group">
+                    <label for="display-name">Display Name</label>
+                    <input type="text" id="display-name" name="displayName" value="{{displayName}}">
+                </div>
+                <div class="form-group">
+                    <label for="bio">Bio</label>
+                    <textarea id="bio" name="bio" placeholder="Tell us about yourself...">{{bio}}</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" value="{{email}}">
+                </div>
+                <button type="submit">Save Changes</button>
+            </form>
+        </div>
+        {{/isOwnProfile}}
+    </div>
+    {{/user}}
+    
+    {{^user}}
+    <div class="profile-not-found">
+        <h2>Profile not found</h2>
+        <p>The user you're looking for doesn't exist.</p>
+        <a href="#home">← Go Home</a>
+    </div>
+    {{/user}}
+</section>

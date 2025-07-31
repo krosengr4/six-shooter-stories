@@ -1,0 +1,45 @@
+<section class="stories">
+    <div class="stories-header">
+        <h2>{{pageTitle}}</h2>
+        <button id="add-story-btn" class="add-story-btn">Add New Story</button>
+    </div>
+    
+    {{#loading}}
+    <div class="loading">{{loadingMessage}}</div>
+    {{/loading}}
+    
+    {{#error}}
+    <div class="error">{{errorMessage}}</div>
+    {{/error}}
+    
+    {{#stories}}
+    <div class="stories-grid">
+        {{#.}}
+        <article class="story-card" data-story-id="{{id}}">
+            <h3>{{title}}</h3>
+            <p class="story-content">{{excerpt}}</p>
+            <div class="story-meta">
+                <span class="author">By: {{author}}</span>
+                <span class="date">{{formattedDate}}</span>
+            </div>
+            <div class="story-actions">
+                <button class="read-more-btn" data-story-id="{{id}}">Read More</button>
+                {{#canEdit}}
+                <button class="edit-btn" data-story-id="{{id}}">Edit</button>
+                <button class="delete-btn" data-story-id="{{id}}">Delete</button>
+                {{/canEdit}}
+            </div>
+        </article>
+        {{/.}}
+    </div>
+    {{/stories}}
+    
+    {{^stories}}
+    {{^loading}}
+    <div class="no-stories">
+        <h3>No stories found</h3>
+        <p>Be the first to share your story!</p>
+    </div>
+    {{/loading}}
+    {{/stories}}
+</section>

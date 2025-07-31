@@ -1,0 +1,58 @@
+<section class="story-detail">
+    <article class="full-story">
+        <header class="story-header">
+            <h1>{{title}}</h1>
+            <div class="story-meta">
+                <span class="author">By: {{author}}</span>
+                <span class="date">{{formattedDate}}</span>
+                {{#tags}}
+                <span class="tag">{{.}}</span>
+                {{/tags}}
+            </div>
+        </header>
+        
+        <div class="story-content">
+            {{content}}
+        </div>
+        
+        {{#canEdit}}
+        <div class="story-actions">
+            <button class="edit-story-btn" data-story-id="{{id}}">Edit Story</button>
+            <button class="delete-story-btn" data-story-id="{{id}}">Delete Story</button>
+        </div>
+        {{/canEdit}}
+    </article>
+    
+    <section class="comments-section">
+        <h3>Comments ({{commentCount}})</h3>
+        
+        {{#canComment}}
+        <form class="comment-form" id="comment-form">
+            <textarea placeholder="Share your thoughts..." name="content" required></textarea>
+            <button type="submit">Post Comment</button>
+        </form>
+        {{/canComment}}
+        
+        <div class="comments-list">
+            {{#comments}}
+            <div class="comment" data-comment-id="{{id}}">
+                <div class="comment-meta">
+                    <span class="comment-author">{{author}}</span>
+                    <span class="comment-date">{{formattedDate}}</span>
+                </div>
+                <div class="comment-content">{{content}}</div>
+            </div>
+            {{/comments}}
+            
+            {{^comments}}
+            <div class="no-comments">
+                <p>No comments yet. Be the first to comment!</p>
+            </div>
+            {{/comments}}
+        </div>
+    </section>
+    
+    <div class="back-to-stories">
+        <button id="back-to-stories">← Back to Stories</button>
+    </div>
+</section>
