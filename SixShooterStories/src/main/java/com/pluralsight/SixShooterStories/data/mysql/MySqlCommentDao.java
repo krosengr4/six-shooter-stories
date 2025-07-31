@@ -1,9 +1,7 @@
 package com.pluralsight.SixShooterStories.data.mysql;
 
 import com.pluralsight.SixShooterStories.data.CommentDao;
-import com.pluralsight.SixShooterStories.data.StoryDao;
 import com.pluralsight.SixShooterStories.models.Comment;
-import org.apache.ibatis.jdbc.SQL;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
